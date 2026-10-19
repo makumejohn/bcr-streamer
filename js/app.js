@@ -511,7 +511,7 @@ async function fileToBase64(file){
 }
 async function githubGetSha(path, token){
   const res = await fetch(`https://api.github.com/repos/makumejohn/bcr-streamer/contents/${path}`, {
-    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json' }
+    headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
   });
   if(res.status===200){ const j=await res.json(); return j.sha; }
   return null;
@@ -522,7 +522,7 @@ async function githubPutFile(path, b64, message, token){
   if(sha) body.sha = sha;
   const res = await fetch(`https://api.github.com/repos/makumejohn/bcr-streamer/contents/${path}`, {
     method: 'PUT',
-    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type':'application/json' },
+    headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type':'application/json' },
     body: JSON.stringify(body)
   });
   if(!res.ok){ const t=await res.text(); throw new Error(`GitHub ${res.status}: ${t}`); }
@@ -553,7 +553,7 @@ async function publishToSharedLibrary(track, mp3File, coverFile, token){
   let currentSha = null, currentTracks = [];
   try{
     const r = await fetch(`https://api.github.com/repos/makumejohn/bcr-streamer/contents/data/tracks.json`, {
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json' }
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
     });
     if(r.ok){
       const j = await r.json();
@@ -589,7 +589,7 @@ async function publishToSharedLibrary(track, mp3File, coverFile, token){
   if(currentSha) putBody.sha = currentSha;
   const putRes = await fetch(`https://api.github.com/repos/makumejohn/bcr-streamer/contents/data/tracks.json`, {
     method: 'PUT',
-    headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type':'application/json' },
+    headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type':'application/json' },
     body: JSON.stringify(putBody)
   });
   if(!putRes.ok) throw new Error('Failed to update data/tracks.json: '+(await putRes.text()));
