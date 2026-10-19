@@ -1,38 +1,50 @@
 [
   {
+    "id": 1792404511197,
+    "title": "for mom",
+    "artist": "BCR Studios",
+    "genre": "R&B",
+    "duration": "—",
+    "seconds": 0,
+    "src": "assets/for-mom-1792404511197.mp3",
+    "cover": "assets/for-mom-1792404511197-cover.png",
+    "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
+    "icon": "♪"
+  },
+  {
     "id": 1792404314938,
     "title": "HATERS KEEP TALKING 1",
     "artist": "BCR Studios",
     "genre": "Hip Hop",
-    "duration": "—",
+    "duration": "â",
     "seconds": 0,
     "src": "assets/haters-keep-talking-1-1792404314938.mp3",
     "cover": "assets/haters-keep-talking-1-1792404314938-cover.jpeg",
     "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
-    "icon": "♪"
+    "icon": "âª"
   },
   {
     "id": 1792404157322,
     "title": "FICKSBURG PRIDE",
     "artist": "BCR Studios",
     "genre": "Hip Hop",
-    "duration": "â",
+    "duration": "Ã¢ÂÂ",
     "seconds": 0,
     "src": "assets/ficksburg-pride-1792404157322.mp3",
     "cover": "assets/ficksburg-pride-1792404157322-cover.jpeg",
     "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
-    "icon": "âª"
+    "icon": "Ã¢ÂÂª"
   },
   {
     "id": 101,
     "title": "Told You I Can",
     "artist": "BCR Studios",
     "genre": "R&B",
-    "duration": "Ã¢ÂÂ",
+    "duration": "ÃÂ¢ÃÂÃÂ",
     "seconds": 0,
     "src": "",
     "cover": "assets/told-you-i-can-rnb.png",
     "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
-    "icon": "Ã¢ÂÂª"
+    "icon": "ÃÂ¢ÃÂÃÂª"
   }
 ]
