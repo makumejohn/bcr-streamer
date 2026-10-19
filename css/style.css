@@ -118,7 +118,7 @@ body{
 .search-box input::placeholder{color:#6d7f9a}
 .search-box button{border:0;background:transparent;color:#7a8aa6;cursor:pointer;font-size:14px;padding:2px 6px}
 
-/* Hero banner - matches image: dark blue gradient with singer */
+/* Hero banner - clean sky-blue gradient (no logo) */
 .hero{
   margin:12px 14px 14px;
   background:

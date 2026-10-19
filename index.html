@@ -91,12 +91,20 @@
         <span class="count">🔒 Private</span>
       </div>
       <div class="upload-card" id="gateCard">
-        <p style="font-size:11px;color:#a9bdd6;line-height:1.6;text-align:center">This uploader is <strong style="color:var(--cyan)">password-protected</strong>. Enter your password to add songs.</p>
+        <p style="font-size:11px;color:#a9bdd6;line-height:1.6;text-align:center">This uploader is <strong style="color:var(--cyan)">password-protected</strong>. Enter your password to add songs <strong>for everyone</strong>.</p>
         <div style="display:flex;gap:8px;margin-top:12px">
           <input type="password" id="gatePass" placeholder="Enter password" style="flex:1;background:#0a1a33;border:1px solid #1e3352;border-radius:10px;padding:10px 12px;color:white;font-size:12px;outline:0">
           <button class="btn-upload" id="unlockBtn" style="width:auto;padding:10px 16px;white-space:nowrap">Unlock</button>
         </div>
-        <p style="font-size:9px;color:#6d7f9a;text-align:center;margin-top:8px">Free • Streaming only • No downloads</p>
+        <div id="tokenBox" style="margin-top:10px;display:none">
+          <p style="font-size:10px;color:#7d8aa2;text-align:center;margin-bottom:6px">For <strong style="color:#22c7f4">shared publishing</strong> (Option 2), paste your GitHub token once — it stays only on your device.</p>
+          <div style="display:flex;gap:8px">
+            <input type="password" id="ghToken" placeholder="ghp_xxx..." style="flex:1;background:#0a1a33;border:1px solid #1e3352;border-radius:10px;padding:10px 12px;color:white;font-size:11px;outline:0">
+            <button id="saveTokenBtn" style="background:#0f2a1a;border:1px solid #2a5a3a;color:#7dd3a2;border-radius:10px;padding:10px 12px;font-size:11px;cursor:pointer">Save</button>
+          </div>
+          <p style="font-size:9px;color:#6d7f9a;text-align:center;margin-top:6px">Create at GitHub → Settings → Developer settings → Personal access tokens (classic) → repo scope. Never share this.</p>
+        </div>
+        <p style="font-size:9px;color:#6d7f9a;text-align:center;margin-top:8px">Free • Shared library • No downloads</p>
       </div>
     </section>
 
@@ -106,6 +114,15 @@
         <span class="count">MP3 + Cover</span>
       </div>
       <div class="upload-card">
+        <!-- GitHub Token for shared publishing (visible after unlock) -->
+        <div id="tokenBox2" style="margin-bottom:12px;padding:10px;background:#0a1a33;border:1px dashed #1e3352;border-radius:10px">
+          <p style="font-size:10px;color:#7d8aa2;text-align:center;margin-bottom:6px">For <strong style="color:#22c7f4">shared publishing</strong> (so everyone sees your song), paste GitHub token once:</p>
+          <div style="display:flex;gap:8px">
+            <input type="password" id="ghToken2" placeholder="ghp_xxx..." style="flex:1;background:#081021;border:1px solid #1e3352;border-radius:8px;padding:9px 10px;color:white;font-size:11px;outline:0">
+            <button id="saveTokenBtn2" style="background:#0f2a1a;border:1px solid #2a5a3a;color:#7dd3a2;border-radius:8px;padding:9px 10px;font-size:11px;cursor:pointer">Save</button>
+          </div>
+          <p style="font-size:8px;color:#55657a;text-align:center;margin-top:6px">GitHub → Settings → Developer settings → Personal access tokens (classic) → repo scope. Stored only on this device.</p>
+        </div>
         <div class="upload-row">
           <label class="upload-btn">
             <input type="file" id="mp3Input" accept=".mp3,audio/mpeg,audio/mp3" hidden>

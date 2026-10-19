@@ -1,0 +1,14 @@
+[
+  {
+    "id": 101,
+    "title": "Told You I Can",
+    "artist": "BCR Studios",
+    "genre": "R&B",
+    "duration": "—",
+    "seconds": 0,
+    "src": "",
+    "cover": "assets/told-you-i-can-rnb.png",
+    "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
+    "icon": "♪"
+  }
+]
