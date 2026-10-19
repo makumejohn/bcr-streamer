@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>BCR Streamer — by BCR Studios</title>
+<meta name="description" content="BCR Streamer by BCR Studios — Free, ad-free, online-only music streaming. No subscriptions. No downloads.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-wrap">
+  <!-- PHONE FRAME (centered on desktop, full width on mobile) -->
+  <div class="phone">
+    <!-- Status / Top Bar -->
+    <header class="topbar">
+      <button class="icon-btn" id="menuBtn" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="brand">
+        <div class="crown">♔</div>
+        <div class="brand-text">
+          <span class="brand-title">BCR</span>
+          <span class="brand-sub">STREAMER</span>
+        </div>
+        <div class="brand-tagline">YOUR MUSIC &nbsp;•&nbsp; YOUR VIBE &nbsp;•&nbsp; ANYTIME</div>
+      </div>
+      <button class="icon-btn" id="searchBtn" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+    </header>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay hidden" id="searchOverlay">
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7aa0b8" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search songs, artists..." autocomplete="off">
+        <button id="clearSearch">✕</button>
+      </div>
+    </div>
+
+    <!-- Hero Banner: STREAM YOUR WORLD -->
+    <section class="hero">
+      <div class="hero-left">
+        <h2><span class="c-cyan">STREAM</span><br>YOUR WORLD</h2>
+        <p>Music &nbsp;•&nbsp; Videos &nbsp;•&nbsp; Artists<br>All in one place</p>
+        <button class="btn-play-now" id="heroPlayBtn">▶ &nbsp; Play Now</button>
+      </div>
+      <div class="hero-right">
+        <!-- singer silhouette using CSS + image -->
+      </div>
+      <div class="hero-dots" id="heroDots">
+        <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </section>
+
+    <!-- Quick Action Tiles -->
+    <!-- MUSIC ONLY mode — Videos/Playlists hidden per request -->
+    <section class="tiles" style="grid-template-columns: repeat(2, 1fr);">
+      <button class="tile" data-action="music">
+        <span class="tile-icon">♫</span>
+        <span>Music</span>
+      </button>
+      <button class="tile" data-action="favorites">
+        <span class="tile-icon">♥</span>
+        <span>Favorites</span>
+        <em id="favBadge" class="tile-badge hidden">0</em>
+      </button>
+    </section>
+
+    <!-- Recently Played — LOADED SONGS SHOW HERE -->
+    <section class="section">
+      <div class="section-head">
+        <h3>Recently Played</h3>
+        <button class="link" id="seeAllBtn">See All &gt;</button>
+      </div>
+      <div class="cards-scroll" id="cardsScroll">
+        <!-- JS injects cards with REAL cover art from loaded songs -->
+      </div>
+      <div class="empty hidden" id="emptyState">
+        <p>No songs found. Try another search.</p>
+        <button class="btn-ghost" id="resetSearch">Clear search</button>
+      </div>
+    </section>
+
+    <!-- Owner Uploader — Password Protected (only you can access) -->
+    <section class="section" id="ownerGate">
+      <div class="section-head">
+        <h3>Owner Access</h3>
+        <span class="count">🔒 Private</span>
+      </div>
+      <div class="upload-card" id="gateCard">
+        <p style="font-size:11px;color:#a9bdd6;line-height:1.6;text-align:center">This uploader is <strong style="color:var(--cyan)">password-protected</strong>. Enter your password to add songs.</p>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <input type="password" id="gatePass" placeholder="Enter password" style="flex:1;background:#0a1a33;border:1px solid #1e3352;border-radius:10px;padding:10px 12px;color:white;font-size:12px;outline:0">
+          <button class="btn-upload" id="unlockBtn" style="width:auto;padding:10px 16px;white-space:nowrap">Unlock</button>
+        </div>
+        <p style="font-size:9px;color:#6d7f9a;text-align:center;margin-top:8px">Free • Streaming only • No downloads</p>
+      </div>
+    </section>
+
+    <section class="section hidden" id="uploadSection">
+      <div class="section-head">
+        <h3>Add Your Real Song</h3>
+        <span class="count">MP3 + Cover</span>
+      </div>
+      <div class="upload-card">
+        <div class="upload-row">
+          <label class="upload-btn">
+            <input type="file" id="mp3Input" accept=".mp3,audio/mpeg,audio/mp3" hidden>
+            <span>🎵 Choose MP3</span>
+            <small id="mp3Name">No file chosen</small>
+          </label>
+          <label class="upload-btn">
+            <input type="file" id="coverInput" accept="image/*" hidden>
+            <span>🖼️ Choose Cover</span>
+            <small id="coverName">Optional — auto sky-blue if empty</small>
+          </label>
+        </div>
+        <div class="upload-fields">
+          <input type="text" id="songTitle" placeholder="Song title — e.g. Told You I Can">
+          <input type="text" id="songArtist" placeholder="Artist — e.g. BCR Studios" value="BCR Studios">
+          <select id="songGenre"><option>Amapiano</option><option>Afro House</option><option>Hip Hop</option><option>R&B</option><option>Electronic</option></select>
+        </div>
+        <button class="btn-upload" id="addSongBtn">+ Add to BCR Streamer</button>
+        <p class="upload-hint">Your song appears instantly in <strong>Recently Played</strong> with cover art. Online-only — no downloads.</p>
+
+        <!-- Manage / Remove Songs -->
+        <div id="manageSongs" style="margin-top:14px;border-top:1px solid #1e3352;padding-top:12px">
+          <div class="section-head" style="padding:0;margin-bottom:8px">
+            <h3 style="font-size:13px">Your Songs — Remove</h3>
+            <span class="count" id="manageCount">0</span>
+          </div>
+          <div id="manageList" style="display:flex;flex-direction:column;gap:8px"></div>
+          <p style="font-size:9px;color:#6d7f9a;text-align:center;margin-top:8px">Tap 🗑️ to permanently remove a song from the app</p>
+        </div>
+
+        <button id="lockBtn" style="width:100%;margin-top:10px;background:transparent;border:1px solid #1e3352;color:#7d8aa2;padding:8px;border-radius:999px;font-size:11px;cursor:pointer">Lock uploader</button>
+      </div>
+    </section>
+
+    <!-- All Tracks List (search/filter view) -->
+    <section class="section hidden" id="allTracksSection">
+      <div class="section-head">
+        <h3 id="allTracksTitle">All Tracks</h3>
+        <span class="count" id="trackCount"></span>
+      </div>
+      <div class="filter-row">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="Amapiano">Amapiano</button>
+        <button class="chip" data-filter="Afro House">Afro House</button>
+        <button class="chip" data-filter="Hip Hop">Hip Hop</button>
+        <button class="chip" data-filter="R&B">R&B</button>
+      </div>
+      <div class="list" id="trackList"></div>
+    </section>
+
+    <!-- Mini Player Bar — shows loaded song cover art -->
+    <div class="mini-player" id="miniPlayer">
+      <img class="mini-cover" id="miniCover" src="" alt="Cover" style="display:none">
+      <div class="mini-cover-ph" id="miniCoverPh">♪</div>
+      <div class="mini-meta">
+        <strong id="miniTitle">Not Playing</strong>
+        <span id="miniArtist">Select a song to start streaming</span>
+      </div>
+      <div class="mini-controls">
+        <button class="m-btn" id="prevBtn" aria-label="Previous">⏮</button>
+        <button class="m-btn play" id="playPauseBtn" aria-label="Play/Pause">
+          <span id="playIcon">▶</span>
+          <span id="pauseIcon" class="hidden">❚❚</span>
+        </button>
+        <button class="m-btn" id="nextBtn" aria-label="Next">⏭</button>
+        <button class="m-btn menu" id="queueBtn" aria-label="Queue">≡</button>
+      </div>
+    </div>
+
+    <!-- Progress in mini player -->
+    <div class="progress-wrap">
+      <span class="time" id="curTime">0:00</span>
+      <div class="progress" id="progressBar">
+        <div class="progress-fill" id="progressFill"></div>
+        <input type="range" id="seek" min="0" max="100" value="0" aria-label="Seek">
+      </div>
+      <span class="time" id="durTime">0:00</span>
+    </div>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-nav="home">
+        <span>⌂</span><small>Home</small>
+      </button>
+      <button class="nav-btn" data-nav="search">
+        <span>⌕</span><small>Search</small>
+      </button>
+      <button class="nav-btn" data-nav="library">
+        <span>▭</span><small>Library</small>
+      </button>
+      <button class="nav-btn" data-nav="profile">
+        <span>◯</span><small>Profile</small>
+      </button>
+    </nav>
+
+    <div class="footer-banner">SKY BLUE &amp; SILVER</div>
+
+    <!-- Queue Drawer -->
+    <div class="drawer hidden" id="drawer">
+      <div class="drawer-head">
+        <h4>Up Next</h4>
+        <button id="closeDrawer">✕</button>
+      </div>
+      <div class="drawer-list" id="drawerList"></div>
+      <div class="drawer-foot">
+        <span>● STREAMING • Online-only • Free & Ad-Free</span>
+        <span>No downloads at launch</span>
+      </div>
+    </div>
+    <div class="overlay hidden" id="overlay"></div>
+
+    <!-- Hidden audio element -->
+    <audio id="audio" preload="metadata" crossorigin="anonymous"></audio>
+  </div>
+
+  <!-- Desktop info panel (shown only on large screens) -->
+  <div class="desktop-info">
+    <h2>BCR Streamer</h2>
+    <p class="lead">Free • Ad-Free • Online-Only</p>
+    <p>Preview your mobile app on the left. On a real phone it fills the screen. This desktop frame helps you test responsiveness.</p>
+    <ul>
+      <li><strong>Play All</strong> buttons stream without downloads</li>
+      <li><strong>Cover art</strong> shows for every loaded song</li>
+      <li><strong>Recently Played</strong> updates automatically</li>
+      <li>No subscriptions, no payments, no ads</li>
+    </ul>
+    <div class="status">
+      <span><strong id="statTotal">8</strong> Tracks</span>
+      <span><strong>∞</strong> Streaming</span>
+      <span><strong>0</strong> Ads</span>
+    </div>
+    <p class="small">Owned by BCR Studios • Durban, ZA • v0.1.0<br>Demo tracks are royalty-free samples. Replace with your licensed catalogue anytime.</p>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast hidden" id="toast"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
