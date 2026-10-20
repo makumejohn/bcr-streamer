@@ -1,14 +1,26 @@
 [
   {
+    "id": 1792510893949,
+    "title": "turn it up re up",
+    "artist": "BCR Studios",
+    "genre": "Hip Hop",
+    "duration": "—",
+    "seconds": 0,
+    "src": "assets/turn-it-up-re-up-1792510893949.mp3",
+    "cover": "assets/turn-it-up-re-up-1792510893949-cover.jpeg",
+    "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
+    "icon": "♪"
+  },
+  {
     "id": 101,
     "title": "Told You I Can",
     "artist": "BCR Studios",
     "genre": "R&B",
-    "duration": "—",
+    "duration": "â",
     "seconds": 0,
     "src": "",
     "cover": "assets/told-you-i-can-rnb.png",
     "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
-    "icon": "♪"
+    "icon": "âª"
   }
 ]
