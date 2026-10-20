@@ -1,15 +1,5 @@
 [
   {
-    "id": 1,
-    "category": "Music",
-    "title": "Told You I Can — MP3 Download",
-    "price": 30,
-    "currency": "ZAR",
-    "description": "R&B single • High-quality 320kbps MP3 + cover • Instant WhatsApp delivery",
-    "image": "assets/told-you-i-can-rnb.png",
-    "badge": "BESTSELLER"
-  },
-  {
     "id": 2,
     "category": "Music",
     "title": "35-Track Bundle — Full Catalogue",
