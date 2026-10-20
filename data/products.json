@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "category": "Music",
+    "title": "Told You I Can — MP3 Download",
+    "price": 30,
+    "currency": "ZAR",
+    "description": "R&B single • High-quality 320kbps MP3 + cover • Instant WhatsApp delivery",
+    "image": "assets/told-you-i-can-rnb.png",
+    "badge": "BESTSELLER"
+  },
+  {
+    "id": 2,
+    "category": "Music",
+    "title": "35-Track Bundle — Full Catalogue",
+    "price": 500,
+    "currency": "ZAR",
+    "description": "All 35 BCR tracks • Amapiano, Afro House, Hip Hop, R&B • ZIP download",
+    "image": "assets/told-you-i-can-rnb.png",
+    "badge": "BUNDLE"
+  },
+  {
+    "id": 3,
+    "category": "Studio Services",
+    "title": "Studio Recording — 1 Hour",
+    "price": 350,
+    "currency": "ZAR",
+    "description": "Durban studio • Recording, mixing guidance • Book via WhatsApp",
+    "image": "",
+    "badge": "IN-STUDIO"
+  },
+  {
+    "id": 4,
+    "category": "Studio Services",
+    "title": "Mixing & Mastering — Per Track",
+    "price": 400,
+    "currency": "ZAR",
+    "description": "Pro mix + master • 48h turnaround • WAV + MP3 delivery",
+    "image": "",
+    "badge": "POPULAR"
+  },
+  {
+    "id": 5,
+    "category": "Video Games",
+    "title": "BCR Adventure — Android Game",
+    "price": 80,
+    "currency": "ZAR",
+    "description": "BCR Studios original game • APK download • Offline play",
+    "image": "",
+    "badge": "NEW"
+  },
+  {
+    "id": 6,
+    "category": "Animations",
+    "title": "30s Music Video Animation",
+    "price": 1500,
+    "currency": "ZAR",
+    "description": "Custom 30-second animated video • For your track • 2 revisions",
+    "image": "",
+    "badge": "CUSTOM"
+  },
+  {
+    "id": 7,
+    "category": "Music Distribution",
+    "title": "Distribution — Single to 150+ Stores",
+    "price": 150,
+    "currency": "ZAR",
+    "description": "Spotify, Apple, TikTok, etc. • Cover + split sheets • Keep 100% royalties",
+    "image": "",
+    "badge": "SERVICE"
+  },
+  {
+    "id": 8,
+    "category": "Music Law",
+    "title": "Music Law Consult — 30 Min",
+    "price": 500,
+    "currency": "ZAR",
+    "description": "Contracts, splits, sampling, copyright • ZA music attorney • Online / in-person",
+    "image": "",
+    "badge": "LEGAL"
+  },
+  {
+    "id": 9,
+    "category": "Music Classes",
+    "title": "Music Production Class — 1 Hour",
+    "price": 250,
+    "currency": "ZAR",
+    "description": "Beginner to pro • FL Studio / Beatmaking • Online or Durban studio",
+    "image": "",
+    "badge": "LEARN"
+  },
+  {
+    "id": 10,
+    "category": "Music Classes",
+    "title": "Vocal Coaching — 1 Hour",
+    "price": 300,
+    "currency": "ZAR",
+    "description": "Voice training • Breathing, pitch, performance • All levels",
+    "image": "",
+    "badge": "COACHING"
+  }
+]

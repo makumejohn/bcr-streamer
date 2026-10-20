@@ -56,8 +56,7 @@
     </section>
 
     <!-- Quick Action Tiles -->
-    <!-- MUSIC ONLY mode — Videos/Playlists hidden per request -->
-    <section class="tiles" style="grid-template-columns: repeat(2, 1fr);">
+    <section class="tiles" style="grid-template-columns: repeat(3, 1fr);">
       <button class="tile" data-action="music">
         <span class="tile-icon">♫</span>
         <span>Music</span>
@@ -66,6 +65,11 @@
         <span class="tile-icon">♥</span>
         <span>Favorites</span>
         <em id="favBadge" class="tile-badge hidden">0</em>
+      </button>
+      <button class="tile" data-action="shop" style="background:linear-gradient(135deg,#0a1931,#143a5a);border-color:#22c7f4">
+        <span class="tile-icon" style="background:#22c7f4;color:#0a1931">🛒</span>
+        <span>Shop</span>
+        <em style="position:absolute;top:6px;right:6px;background:#22c7f4;color:#0a1931;font-size:7px;font-weight:800;padding:2px 5px;border-radius:999px">SELL</em>
       </button>
     </section>
 
@@ -155,6 +159,65 @@
 
         <button id="lockBtn" style="width:100%;margin-top:10px;background:transparent;border:1px solid #1e3352;color:#7d8aa2;padding:8px;border-radius:999px;font-size:11px;cursor:pointer">Lock uploader</button>
       </div>
+
+      <!-- SHOP PRODUCT UPLOADER — Add / Edit Prices (same password + same token) -->
+      <div class="upload-card" style="margin-top:14px">
+        <div class="section-head" style="padding:0;margin-bottom:8px">
+          <h3 style="font-size:13px">🛒 Add Product / Change Price</h3>
+          <span class="count" style="background:#22c7f4;color:#0a1931">Shop</span>
+        </div>
+        <p style="font-size:9px;color:#7d8aa2;text-align:center;margin-bottom:8px">Same token = publishes for everyone. Edit <code style="background:#0a1a33;padding:1px 4px;border-radius:4px;color:#22c7f4">data/products.json</code> for everyone.</p>
+        <div class="upload-row">
+          <label class="upload-btn" style="flex:1">
+            <input type="file" id="prodImageInput" accept="image/*" hidden>
+            <span>🖼️ Product Image</span>
+            <small id="prodImageName">Optional</small>
+          </label>
+          <select id="prodCategory" style="flex:1;background:#0a1a33;border:1px solid #1e3352;border-radius:10px;padding:10px 12px;color:white;font-size:12px;outline:0">
+            <option>Music</option><option>Studio Services</option><option>Video Games</option><option>Animations</option><option>Music Distribution</option><option>Music Law</option><option>Music Classes</option><option>Other</option>
+          </select>
+        </div>
+        <div class="upload-fields">
+          <input type="text" id="prodTitle" placeholder="Product title — e.g. Mixing & Mastering">
+          <input type="text" id="prodDesc" placeholder="Short description — e.g. Pro mix + master 48h">
+          <div style="display:flex;gap:8px">
+            <input type="number" id="prodPrice" placeholder="Price in ZAR — e.g. 400" style="flex:1;background:#0a1a33;border:1px solid #1e3352;border-radius:10px;padding:10px 12px;color:white;font-size:12px;outline:0">
+            <input type="text" id="prodBadge" placeholder="Badge — BESTSELLER" style="flex:1;background:#0a1a33;border:1px solid #1e3352;border-radius:10px;padding:10px 12px;color:white;font-size:12px;outline:0">
+          </div>
+        </div>
+        <button class="btn-upload" id="addProductBtn" style="background:#22c7f4;color:#0a1931">+ Add to Shop</button>
+        <p class="upload-hint">Product appears instantly in <strong>Shop</strong>. Shared for everyone if token saved.</p>
+
+        <div id="manageProducts" style="margin-top:14px;border-top:1px solid #1e3352;padding-top:12px">
+          <div class="section-head" style="padding:0;margin-bottom:8px">
+            <h3 style="font-size:13px">Your Products — Edit / Remove</h3>
+            <span class="count" id="prodManageCount">0</span>
+          </div>
+          <div id="prodManageList" style="display:flex;flex-direction:column;gap:8px"></div>
+          <p style="font-size:9px;color:#6d7f9a;text-align:center;margin-top:8px">Tap ✏️ to change price • 🗑️ to remove • All changes publish for everyone with token</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP & SERVICES — Sell music, studio, games, animations, etc. -->
+    <section class="section hidden" id="shopSection">
+      <div class="section-head">
+        <h3>BCR Shop & Services</h3>
+        <span class="count">Sell • ZA</span>
+      </div>
+      <p style="font-size:10px;color:#7d8aa2;text-align:center;margin:-4px 0 8px;line-height:1.5">Tap <strong style="color:#22c7f4">Buy / Enquire</strong> to open WhatsApp. Edit prices in <code style="background:#0a1a33;padding:1px 4px;border-radius:4px">data/products.json</code>.</p>
+      <div class="filter-row" id="shopFilters">
+        <button class="chip active" data-shop="all">All</button>
+        <button class="chip" data-shop="Music">Music</button>
+        <button class="chip" data-shop="Studio Services">Studio</button>
+        <button class="chip" data-shop="Video Games">Games</button>
+        <button class="chip" data-shop="Animations">Animations</button>
+        <button class="chip" data-shop="Music Distribution">Distribution</button>
+        <button class="chip" data-shop="Music Law">Music Law</button>
+        <button class="chip" data-shop="Music Classes">Classes</button>
+      </div>
+      <div class="list" id="shopList" style="gap:10px"></div>
+      <p style="font-size:9px;color:#55657a;text-align:center;margin-top:8px">Prices in ZAR • WhatsApp checkout (free) • Paystack/PayPal later when ready</p>
     </section>
 
     <!-- All Tracks List (search/filter view) -->
@@ -213,8 +276,8 @@
       <button class="nav-btn" data-nav="library">
         <span>▭</span><small>Library</small>
       </button>
-      <button class="nav-btn" data-nav="profile">
-        <span>◯</span><small>Profile</small>
+      <button class="nav-btn" data-nav="shop">
+        <span>🛒</span><small>Shop</small>
       </button>
     </nav>
 

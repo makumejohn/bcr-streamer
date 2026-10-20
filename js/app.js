@@ -362,8 +362,9 @@ document.querySelectorAll('.chip').forEach(ch=>{
 document.querySelectorAll('.tile').forEach(t=>{
   t.addEventListener('click', ()=>{
     const a=t.dataset.action;
-    if(a==='music'){ filterGenre='all'; allTracksSection.classList.remove('hidden'); viewAll=true; }
-    if(a==='favorites'){ filterGenre='favorites'; allTracksSection.classList.remove('hidden'); }
+    if(a==='music'){ filterGenre='all'; allTracksSection.classList.remove('hidden'); if(shopSection) shopSection.classList.add('hidden'); viewAll=true; }
+    if(a==='favorites'){ filterGenre='favorites'; allTracksSection.classList.remove('hidden'); if(shopSection) shopSection.classList.add('hidden'); }
+    if(a==='shop'){ openShop(); return; }
     if(a==='videos'){ toast('Videos hidden — music only mode at launch'); return; }
     if(a==='playlists'){ toast('Playlists — use Favorites for now (music only)'); return; }
     document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active', c.dataset.filter===filterGenre));
@@ -376,10 +377,11 @@ document.querySelectorAll('.nav-btn').forEach(b=>{
     document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
     const nav=b.dataset.nav;
-    if(nav==='home'){ window.scrollTo({top:0,behavior:'smooth'}); allTracksSection.classList.add('hidden'); }
+    if(nav==='home'){ window.scrollTo({top:0,behavior:'smooth'}); allTracksSection.classList.add('hidden'); if(shopSection) shopSection.classList.add('hidden'); }
     if(nav==='search'){ searchOverlay.classList.remove('hidden'); searchInput.focus(); }
-    if(nav==='library'){ allTracksSection.classList.remove('hidden'); allTracksSection.scrollIntoView({behavior:'smooth'}); }
-    if(nav==='profile'){ toast('Profile — Free account. No subscriptions at launch.'); }
+    if(nav==='library'){ allTracksSection.classList.remove('hidden'); if(shopSection) shopSection.classList.add('hidden'); allTracksSection.scrollIntoView({behavior:'smooth'}); }
+    if(nav==='shop'){ openShop(); return; }
+    if(nav==='profile'){ toast('Profile — Free account. Streaming free, Shop for sales.'); }
   });
 });
 function openDrawer(){ drawer.classList.remove('hidden'); overlay.classList.remove('hidden'); }
@@ -753,10 +755,197 @@ async function initTracks(){
   queue = [...tracks];
   updateStats(); renderCards(); renderList(); renderDrawer(); renderManageList(); updatePlayerUI();
 }
+// --- SHOP & SERVICES (sell music, studio, games, animations, etc.) ---
+const shopSection = document.getElementById('shopSection');
+const shopList = document.getElementById('shopList');
+let products = [];
+let shopFilter = 'all';
+// Your WhatsApp for enquiries — BCR Studios
+const WHATSAPP = '27671694413'; // 067-169-4413 -> 27 67 169 4413
+const BCR_EMAIL = 'bcrstudios03@gmail.com';
+async function loadProducts(){
+  try{
+    const r = await fetch('data/products.json', {cache:'no-store'});
+    if(r.ok) products = await r.json();
+    else products = await (await fetch('https://raw.githubusercontent.com/makumejohn/bcr-streamer/main/data/products.json')).json();
+  } catch(e){ products=[]; }
+}
+function fmtPrice(p){ return `R${p.toLocaleString('en-ZA')}`; }
+function renderShop(){
+  if(!shopList) return;
+  shopList.innerHTML='';
+  const list = shopFilter==='all' ? products : products.filter(p=> p.category===shopFilter);
+  if(list.length===0){ shopList.innerHTML='<p style="text-align:center;color:#7d8aa2;font-size:12px;padding:16px">No items in this category</p>'; return; }
+  list.forEach(p=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;gap:12px;background:#0a1a33;border:1px solid #1e3352;border-radius:12px;padding:12px;align-items:center';
+    const img = p.image ? `<img src="${p.image}" onerror="this.style.display='none'" style="width:56px;height:56px;border-radius:8px;object-fit:cover;border:1px solid #1e3352;flex-shrink:0">` : `<div style="width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,#0a1931,#1e3a5a);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🛒</div>`;
+    const waMsg = encodeURIComponent(`Hi BCR Studios! I'm interested in: ${p.title} — ${fmtPrice(p.price)} (${p.category}). Is it available?`);
+    const waLink = `https://wa.me/${WHATSAPP}?text=${waMsg}`;
+    const emailLink = `mailto:${BCR_EMAIL}?subject=${encodeURIComponent('Enquiry: '+p.title)}&body=${encodeURIComponent('Hi BCR Studios,\n\nI want to buy: '+p.title+' — '+fmtPrice(p.price)+' ('+p.category+')\n\nPlease send details.\n\nThanks!')}`;
+    row.innerHTML=`
+      ${img}
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span style="background:#22c7f4;color:#0a1931;font-size:7px;font-weight:800;padding:2px 6px;border-radius:999px">${p.category.toUpperCase()}</span>${p.badge?`<span style="background:#1e3352;color:#22c7f4;font-size:7px;font-weight:700;padding:2px 6px;border-radius:999px;border:1px solid #244060">${p.badge}</span>`:''}</div>
+        <strong style="display:block;font-size:12px;color:white;margin:4px 0 2px;line-height:1.3">${p.title}</strong>
+        <span style="display:block;font-size:10px;color:#7d8aa2;line-height:1.4">${p.description}</span>
+        <strong style="display:block;color:#22c7f4;font-size:13px;margin-top:4px">${fmtPrice(p.price)} <span style="font-size:9px;color:#55657a">${p.currency}</span></strong>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+        <a href="${waLink}" target="_blank" rel="noopener" style="background:#22c7f4;color:#0a1931;font-weight:800;font-size:11px;padding:10px 14px;border-radius:999px;text-decoration:none;white-space:nowrap;text-align:center">WhatsApp</a>
+        <a href="${emailLink}" style="background:transparent;border:1px solid #1e3352;color:#7d8aa2;font-weight:700;font-size:10px;padding:7px 10px;border-radius:999px;text-decoration:none;white-space:nowrap;text-align:center">Email</a>
+      </div>
+    `;
+    shopList.appendChild(row);
+  });
+}
+function openShop(){
+  if(allTracksSection) allTracksSection.classList.add('hidden');
+  if(shopSection) shopSection.classList.remove('hidden');
+  document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
+  const s=document.querySelector('[data-nav="shop"]'); if(s) s.classList.add('active');
+  if(products.length===0) loadProducts().then(renderShop);
+  else renderShop();
+  shopSection.scrollIntoView({behavior:'smooth'});
+}
+document.querySelectorAll('#shopFilters .chip').forEach(ch=>{
+  ch.addEventListener('click', ()=>{
+    document.querySelectorAll('#shopFilters .chip').forEach(c=>c.classList.remove('active'));
+    ch.classList.add('active');
+    shopFilter=ch.dataset.shop;
+    renderShop();
+  });
+});
+
+// --- PRODUCT UPLOADER (same password + same token as songs) ---
+let pendingProdImage = null;
+let pendingProdImageUrl = null;
+const prodImageInput = document.getElementById('prodImageInput');
+const prodImageName = document.getElementById('prodImageName');
+if(prodImageInput){
+  prodImageInput.addEventListener('change', ()=>{
+    const f=prodImageInput.files[0]; if(!f) return;
+    pendingProdImage=f; prodImageName.textContent=f.name; prodImageName.style.color='#22c7f4';
+    if(pendingProdImageUrl) URL.revokeObjectURL(pendingProdImageUrl);
+    pendingProdImageUrl=URL.createObjectURL(f);
+  });
+}
+function renderProdManageList(){
+  const listEl=document.getElementById('prodManageList');
+  const countEl=document.getElementById('prodManageCount');
+  if(!listEl) return;
+  listEl.innerHTML=''; if(countEl) countEl.textContent=products.length;
+  if(products.length===0){ listEl.innerHTML=`<div style="padding:12px;text-align:center;color:#7d8aa2;font-size:11px;border:1px dashed #1e3352;border-radius:10px">No products — add one above</div>`; return; }
+  products.forEach(p=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:8px;background:#0a1a33;border:1px solid #1e3352;border-radius:10px;padding:8px 10px';
+    row.innerHTML=`
+      <div style="width:36px;height:36px;border-radius:6px;background:linear-gradient(135deg,#0a1931,#1e3a5a);display:grid;place-items:center;font-size:14px;flex-shrink:0;border:1px solid #1e3352">${p.image?'🖼️':'🛒'}</div>
+      <div style="flex:1;min-width:0">
+        <strong style="display:block;font-size:11px;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.title}</strong>
+        <span style="display:block;font-size:10px;color:#7d8aa2">${p.category} • R${p.price}</span>
+      </div>
+      <button data-edit="${p.id}" style="background:#0a1a33;border:1px solid #1e3352;color:#22c7f4;border-radius:8px;padding:6px 8px;font-size:10px;cursor:pointer">✏️ Edit</button>
+      <button data-remove-prod="${p.id}" style="background:#1a0f14;border:1px solid #4a1a2a;color:#ff6b81;border-radius:8px;padding:6px 8px;font-size:10px;cursor:pointer">🗑️</button>
+    `;
+    row.querySelector('[data-edit]').addEventListener('click', async ()=>{
+      const newPrice=prompt(`Edit price for \"${p.title}\" (current R${p.price}):`, p.price);
+      if(newPrice===null) return;
+      const v=parseInt(newPrice);
+      if(isNaN(v)||v<0){ toast('Invalid price'); return; }
+      p.price=v;
+      if(getGhToken()){
+        try{ await publishProductsToGitHub(products); toast(`Price updated to R${v} — published for everyone!`);} catch(e){ toast('Price saved locally only: '+e.message.slice(0,80));}
+      } else { toast(`Price set to R${v} locally — add token to publish for everyone`); }
+      renderShop(); renderProdManageList();
+    });
+    row.querySelector('[data-remove-prod]').addEventListener('click', async ()=>{
+      if(!confirm(`Remove \"${p.title}\" from Shop?`)) return;
+      products=products.filter(x=>x.id!==p.id);
+      if(getGhToken()){
+        try{ await publishProductsToGitHub(products); toast(`Removed: ${p.title} — published for everyone`);} catch(e){ toast('Removed locally only: '+e.message.slice(0,80));}
+      } else toast(`Removed locally: ${p.title}`);
+      renderShop(); renderProdManageList();
+    });
+    listEl.appendChild(row);
+  });
+}
+async function publishProductsToGitHub(productList){
+  const token=getGhToken(); if(!token) throw new Error('No GitHub token — paste ghp_... first');
+  // Get sha for products.json
+  let sha=null;
+  try{
+    const r=await fetch(`https://api.github.com/repos/makumejohn/bcr-streamer/contents/data/products.json`,{headers:{Authorization:`token ${token}`,Accept:'application/vnd.github.v3+json'}});
+    if(r.ok){ const j=await r.json(); sha=j.sha; }
+  }catch(e){}
+  const newB64=btoa(unescape(encodeURIComponent(JSON.stringify(productList, null, 2))));
+  const body={message:`feat: update shop products (${productList.length} items)`,content:newB64,branch:'main'}; if(sha) body.sha=sha;
+  const putRes=await fetch(`https://api.github.com/repos/makumejohn/bcr-streamer/contents/data/products.json`,{method:'PUT',headers:{Authorization:`token ${token}`,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!putRes.ok) throw new Error(`GitHub ${putRes.status}: ${(await putRes.text()).slice(0,120)}`);
+}
+async function publishProductWithImage(prod, imageFile){
+  const token=getGhToken();
+  let imagePath=null;
+  if(imageFile && token){
+    const ext=imageFile.name.split('.').pop()||'jpg';
+    const slug=prod.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'-'+prod.id;
+    imagePath=`assets/${slug}.${ext}`;
+    toast(`Uploading product image: ${imagePath}...`);
+    const b64=await fileToBase64(imageFile);
+    await githubPutFile(imagePath, b64, `feat: add product ${prod.title} image`, token);
+    prod.image=imagePath;
+  } else if(pendingProdImageUrl){ prod.image=pendingProdImageUrl; }
+}
+const addProductBtn=document.getElementById('addProductBtn');
+if(addProductBtn){
+  addProductBtn.addEventListener('click', async ()=>{
+    const title=document.getElementById('prodTitle').value.trim();
+    const category=document.getElementById('prodCategory').value;
+    const price=parseInt(document.getElementById('prodPrice').value);
+    const desc=document.getElementById('prodDesc').value.trim();
+    const badge=document.getElementById('prodBadge').value.trim();
+    if(!title||isNaN(price)){ toast('Enter product title and price in ZAR'); return; }
+    const newId=Date.now();
+    const newProd={id:newId,category,title,price,currency:'ZAR',description:desc||category+' — contact for details',image:'',badge:badge||''};
+    // Upload image if any
+    try{
+      addProductBtn.textContent='Publishing...'; addProductBtn.disabled=true;
+      await publishProductWithImage(newProd, pendingProdImage);
+      products.unshift(newProd);
+      if(getGhToken()){
+        await publishProductsToGitHub(products);
+        toast(`Added to Shop for everyone: ${title} — R${price}`);
+      } else {
+        toast(`Added locally: ${title} — add token to publish for everyone`);
+      }
+    } catch(e){
+      // Fallback local only
+      products.unshift(newProd);
+      toast('Added locally only: '+e.message.slice(0,100));
+    } finally {
+      addProductBtn.textContent='+ Add to Shop'; addProductBtn.disabled=false;
+    }
+    // Reset form
+    document.getElementById('prodTitle').value=''; document.getElementById('prodDesc').value=''; document.getElementById('prodPrice').value=''; document.getElementById('prodBadge').value='';
+    if(prodImageInput) prodImageInput.value=''; if(prodImageName){prodImageName.textContent='Optional'; prodImageName.style.color='';} pendingProdImage=null; if(pendingProdImageUrl) URL.revokeObjectURL(pendingProdImageUrl); pendingProdImageUrl=null;
+    renderShop(); renderProdManageList();
+    openShop();
+  });
+}
+// Extend unlock to also show product manager
+const origUnlock=unlock;
+unlock=function(){
+  origUnlock();
+  setTimeout(()=>{ renderProdManageList(); if(products.length===0) loadProducts().then(()=>{renderShop(); renderProdManageList();}); }, 150);
+};
+function lockAndHideShop(){ if(shopSection) shopSection.classList.add('hidden'); }
+
 // Init
 (async ()=>{
   updateFavBadge();
   await initTracks();
+  await loadProducts();
+  renderProdManageList();
   durTime.textContent='0:00';
 })();
 window.addEventListener('offline', ()=> toast('You are offline — streaming requires internet'));
