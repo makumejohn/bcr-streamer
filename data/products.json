@@ -1,5 +1,25 @@
 [
   {
+    "id": 1792511573098,
+    "category": "Studio Services",
+    "title": "mixing and mastering",
+    "price": 150,
+    "currency": "ZAR",
+    "description": "only mixing and mastering a song you already recorded",
+    "image": "assets/mixing-and-mastering-1792511573098.jpeg",
+    "badge": "bestseller"
+  },
+  {
+    "id": 1,
+    "category": "Music",
+    "title": "Told You I Can — MP3 Download",
+    "price": 30,
+    "currency": "ZAR",
+    "description": "R&B single • High-quality 320kbps MP3 + cover • Instant WhatsApp delivery",
+    "image": "assets/told-you-i-can-rnb.png",
+    "badge": "BESTSELLER"
+  },
+  {
     "id": 2,
     "category": "Music",
     "title": "35-Track Bundle — Full Catalogue",
