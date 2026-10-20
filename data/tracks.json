@@ -1,38 +1,50 @@
 [
   {
-    "id": 1792510995424,
-    "title": "for mom",
+    "id": 1792511120702,
+    "title": "HATERS KEEP TALKING 1",
     "artist": "BCR Studios",
     "genre": "Hip Hop",
     "duration": "—",
     "seconds": 0,
+    "src": "assets/haters-keep-talking-1-1792511120702.mp3",
+    "cover": "assets/haters-keep-talking-1-1792511120702-cover.jpeg",
+    "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
+    "icon": "♪"
+  },
+  {
+    "id": 1792510995424,
+    "title": "for mom",
+    "artist": "BCR Studios",
+    "genre": "Hip Hop",
+    "duration": "â",
+    "seconds": 0,
     "src": "assets/for-mom-1792510995424.mp3",
     "cover": "assets/for-mom-1792510995424-cover.png",
     "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
-    "icon": "♪"
+    "icon": "âª"
   },
   {
     "id": 1792510893949,
     "title": "turn it up re up",
     "artist": "BCR Studios",
     "genre": "Hip Hop",
-    "duration": "â",
+    "duration": "Ã¢ÂÂ",
     "seconds": 0,
     "src": "assets/turn-it-up-re-up-1792510893949.mp3",
     "cover": "assets/turn-it-up-re-up-1792510893949-cover.jpeg",
     "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
-    "icon": "âª"
+    "icon": "Ã¢ÂÂª"
   },
   {
     "id": 101,
     "title": "Told You I Can",
     "artist": "BCR Studios",
     "genre": "R&B",
-    "duration": "Ã¢ÂÂ",
+    "duration": "ÃÂ¢ÃÂÃÂ",
     "seconds": 0,
     "src": "",
     "cover": "assets/told-you-i-can-rnb.png",
     "color": "linear-gradient(135deg,#0a1931 0%, #1e3a5a 100%)",
-    "icon": "Ã¢ÂÂª"
+    "icon": "ÃÂ¢ÃÂÃÂª"
   }
 ]
